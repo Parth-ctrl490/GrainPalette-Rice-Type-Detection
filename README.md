@@ -2,7 +2,7 @@
 
 > **A Deep Learning Odyssey In Rice Type Classification Through Transfer Learning**
 
-![Home Page](static/uploads/Screenshot 2026-03-27 143309.png)
+![Home Page](static/uploads/Screenshot%202026-03-27%20143309.png)
 
 ---
 
@@ -30,19 +30,19 @@ Home growers can explore the diversity of rice types, understand their unique ch
 ## 🖼️ Project Screenshots
 
 ### 🏠 Home Page
-![Home Page](static/uploads/Screenshot 2026-03-27 143309.png)
+![Home Page](static/uploads/Screenshot%202026-03-27%20143309.png)
 
 ### 🔍 Prediction Result - Basmati Rice (99.95% Confidence)
-![Result Page](static/uploads/Screenshot 2026-03-27 143252.png)
+![Result Page](static/uploads/Screenshot%202026-03-27%20143252.png)
 
 ### 📊 Training & Evaluation Accuracy
-![Accuracy Graph](static/uploads/Screenshot 2026-03-25 095454.png)
+![Accuracy Graph](static/uploads/Screenshot%202026-03-25%20095454.png)
 
 ### 📉 Training & Evaluation Loss
-![Loss Graph](static/uploads/Screenshot 2026-03-27 143259.png)
+![Loss Graph](static/uploads/Screenshot%202026-03-27%20143259.png)
 
 ### 🌾 Rice Categories Visualization
-![Rice Categories](static/uploads/Screenshot 2026-03-27 143303.png)
+![Rice Categories](static/uploads/Screenshot%202026-03-27%20143303.png)
 
 ---
 
