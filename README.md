@@ -2,7 +2,7 @@
 
 > **A Deep Learning Odyssey In Rice Type Classification Through Transfer Learning**
 
-![Home Page](static/uploads/Screenshot%202026-03-27%20143309.png)
+"C:\Users\HP\Pictures\Screenshots\Screenshot 2026-03-27 153900.png"
 
 ---
 
