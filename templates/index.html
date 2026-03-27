@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rice Type Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #2d6a4f;
+            --light-green: #52b788;
+            --gold: #d4a017;
+            --dark: #0a0a0a;
+            --cream: #f5f0e8;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+       
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 4rem;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        .hero {
+            min-height: 100vh;
+           background: linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(45,106,79,0.6) 100%),
+            url('https://static.vecteezy.com/system/resources/previews/035/540/306/non_2x/ai-generated-green-rice-fields-in-the-rainy-season-beautiful-natural-scenery-photo.jpg') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .hero-tag {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.3s;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.5s;
+        }
+
+        .hero h1 span { color: var(--light-green); }
+
+        .hero p {
+            max-width: 520px;
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.7s;
+        }
+
+        .btn-predict {
+            display: inline-block;
+            padding: 1rem 2.8rem;
+            background: var(--gold);
+            color: var(--dark);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.9s;
+        }
+        .btn-predict:hover {
+            background: var(--light-green);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(82,183,136,0.3);
+        }
+
+        
+        .about {
+            padding: 7rem 4rem;
+            background: var(--cream);
+            color: var(--dark);
+        }
+
+        .about-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            filter: sepia(10%);
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            margin-bottom: 1.5rem;
+            color: var(--green);
+        }
+
+        .about-text p {
+            color: #444;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 1.2rem;
+            border-left: 3px solid var(--green);
+        }
+
+        .feature-card h4 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--green);
+            margin-bottom: 0.3rem;
+        }
+
+        .feature-card p {
+            font-size: 0.8rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* TESTIMONIALS */
+        .testimonials {
+            padding: 7rem 4rem;
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+
+        .testimonials .sub {
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 3.5rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 2rem;
+            text-align: left;
+        }
+
+        .testimonial-card p {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.92rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-card .author {
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+        }
+
+        .contact {
+            padding: 7rem 4rem;
+            background: var(--green);
+            color: var(--white);
+        }
+
+        .contact h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            min-width: 200px;
+        }
+        .contact-card h4 { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.7; }
+        .contact-card p { font-size: 0.9rem; }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .contact-form input, .contact-form textarea {
+            padding: 0.9rem 1.2rem;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .contact-form input::placeholder, .contact-form textarea::placeholder { color: rgba(255,255,255,0.5); }
+        .contact-form textarea { grid-column: 1/-1; resize: vertical; min-height: 100px; }
+        .contact-form button { grid-column: 1/-1; padding: 1rem; background: var(--gold); color: var(--dark); font-weight: 500; border: none; cursor: pointer; font-size: 0.9rem; letter-spacing: 0.05em; transition: opacity 0.3s; }
+        .contact-form button:hover { opacity: 0.85; }
+        footer {
+            background: #050505;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        footer p { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+        footer a { color: var(--gold); text-decoration: none; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .about, .testimonials, .contact { padding: 4rem 1.5rem; }
+            .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .contact-form { grid-template-columns: 1fr; }
+            footer { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="/" class="nav-logo">Rice Type Detection</a>
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="/details">Predict</a></li>
+    </ul>
+</nav>
+<section class="hero">
+    <p class="hero-tag">AI-Powered Classification</p>
+    <h1>Welcome to <span>Rice Type</span> Detection</h1>
+    <p>This model can detect rice type based on rice images with over 97% accuracy using deep learning.</p>
+    <a href="/details" class="btn-predict">Predict Now</a>
+</section>
+<section class="about" id="about">
+    <div class="about-inner">
+        <img src="https://static.vecteezy.com/system/resources/previews/035/540/306/non_2x/ai-generated-green-rice-fields-in-the-rainy-season-beautiful-natural-scenery-photo.jpg" alt="Rice field">
+        <div class="about-text">
+            <h2>About the Rice Type Classification Model</h2>
+            <p>This model is built using Convolutional Neural Network and trained on labelled images of rice. The model takes image of rice grain as input and gives its prediction for the type of rice.</p>
+            <div class="features">
+                <div class="feature-card">
+                    <h4>Accuracy of the Model</h4>
+                    <p>The model is capable of checking for 5 different rice types.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Different Types of Rice</h4>
+                    <p>Arborio, Basmati, Ipsala, Jasmine, Karacadag</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Dataset used</h4>
+                    <p>The dataset of labelled images is obtained from Kaggle.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Technical Architecture</h4>
+                    <p>The model is trained on MobileNetV2 Architecture using Transfer Learning.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+ 
+<section class="testimonials" id="testimonials">
+    <h2>What People Say</h2>
+    <p class="sub">Feedback from researchers and users</p>
+    <div class="testimonial-grid">
+        <div class="testimonial-card">
+            <p>"An incredibly accurate tool. It correctly identified Basmati rice from a single grain image. Impressive work!"</p>
+            <span class="author">— Agricultural Researcher</span>
+        </div>
+        <div class="testimonial-card">
+            <p>"The model's speed and precision are remarkable. A great example of transfer learning applied to real-world problems."</p>
+            <span class="author">— ML Engineer</span>
+        </div>
+        <div class="testimonial-card">
+            <p>"Very easy to use. Just upload a photo and get instant results. Highly recommended for food quality checks."</p>
+            <span class="author">— Food Quality Analyst</span>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-cards">
+        <div class="contact-card">
+            <h4>Our Address</h4>
+            <p>Kanpur, Up, India</p>
+        </div>
+        <div class="contact-card">
+            <h4>Email Us</h4>
+            <p>2k23.psitaiml2310215@gmail.com</p>
+        </div>
+        <div class="contact-card">
+            <h4>Call Us</h4>
+            <p>+91 55882 55448</p>
+        </div>
+    </div>
+    <form class="contact-form">
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Your Email">
+        <input type="text" placeholder="Subject">
+        <textarea placeholder="Your Message"></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+
+<footer>
+    <p>Rice Type Detection &copy; 2026</p>
+    <a href="/details">Try the Model →</a>
+</footer>
+
+</body>
+</html>

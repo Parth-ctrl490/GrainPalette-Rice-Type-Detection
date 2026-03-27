@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details Page | Rice Type Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+         --green: #2d6a4f;
+            --light-green: #52b788;
+           
+         --gold: #d4a017;
+            --dark: #0a0a0a;
+            --cream: #f5f0e8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+          background: var(--cream);
+        
+      color: var(--dark);
+            min-height: 100vh;
+        }
+        nav {
+            display: flex;
+         justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 4rem;
+            background: var(--dark);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            text-decoration: none;
+    }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+     .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+.breadcrumb {
+            padding: 1rem 4rem;
+            background: var(--white);
+            font-size: 0.85rem;
+            color: #888;
+            border-bottom: 1px solid #eee;
+        }
+        .breadcrumb a { color: var(--green); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .page-header {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 4rem;
+  }
+  .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem; }
+
+        .page-header p { color: rgba(255,255,255,0.6); font-size: 0.95rem; }
+        .upload-section {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .upload-card {
+            background: white;
+            border: 2px dashed #ccc;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            border-radius: 2px;
+            transition: border-color 0.3s;
+        }
+        .upload-card:hover { border-color: var(--green); }
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .upload-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        .upload-card p {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        .file-input-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        input[type="file"] {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .btn-upload {
+            padding: 0.8rem 2.5rem;
+            background: var(--green);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            transition: all 0.3s;
+        }
+        .btn-upload:hover {
+            background: var(--light-green);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45,106,79,0.3);
+}
+        .preview-area {
+            margin-top: 2rem;
+            display: none;
+        }
+        .preview-area img {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border: 1px solid #eee;
+}
+        .rice-types {
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+        .rice-types h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--green);
+}
+        .rice-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .rice-tag {
+            padding: 0.4rem 1rem;
+            background: var(--green);
+            color: white;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+        footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/" class="nav-logo">Rice Type Detection</a>
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#testimonials">Testimonials</a></li>
+        <li><a href="/#contact">Contact</a></li>
+        <li><a href="/details" class="active">Predict</a></li>
+    </ul>
+</nav>
+<div class="breadcrumb">
+    <a href="/">Home</a> / Details Page
+</div>
+
+<div class="page-header">
+    <h1>Details Page</h1>
+    <p>Upload a rice grain image to get an instant prediction</p>
+</div>
+
+<div class="upload-section">
+    <div class="upload-card">
+        <div class="upload-icon">🌾</div>
+        <h3>Upload Your Image</h3>
+<p>Choose a clear image of rice grains for best results</p>
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+            <div class="file-input-wrapper">
+                <input type="file" name="image" accept="image/*" id="imageInput" onchange="previewImage(event)" required>
+        </div>
+            <div class="preview-area" id="previewArea">
+     <img id="previewImg" src="" alt="Preview">
+            </div>
+            <br>
+            <button type="submit" class="btn-upload">Upload & Predict</button>
+ </form>
+    </div>
+</div>
+
+<div class="rice-types">
+    <h3>Detectable Rice Types</h3>
+    <div class="rice-tags">
+        <span class="rice-tag">Arborio</span>
+        <span class="rice-tag">Basmati</span>
+        <span class="rice-tag">Ipsala</span>
+        <span class="rice-tag">Jasmine</span>
+        <span class="rice-tag">Karacadag</span>
+</div>
+</div>
+
+<footer>
+    Parth Shukla &copy; 2026
+</footer>
+
+<script>
+    function previewImage(event) {
+        const preview = document.getElementById('previewImg');
+        const previewArea = document.getElementById('previewArea');
+        const file = event.target.files[0];
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+            previewArea.style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>

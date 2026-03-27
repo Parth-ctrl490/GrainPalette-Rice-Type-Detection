@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results | Rice Type Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #2d6a4f;
+            --light-green: #52b788;
+            --gold: #d4a017;
+            --dark: #0a0a0a;
+            --cream: #f5f0e8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            min-height: 100vh;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 4rem;
+            background: var(--dark);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+
+        .breadcrumb {
+            padding: 1rem 4rem;
+            background: white;
+            font-size: 0.85rem;
+            color: #888;
+            border-bottom: 1px solid #eee;
+        }
+        .breadcrumb a { color: var(--green); text-decoration: none; }
+
+        .result-container {
+            max-width: 750px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .result-card {
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+        }
+
+        .result-header {
+            background: var(--green);
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .result-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .result-header p { opacity: 0.7; font-size: 0.9rem; }
+
+        .result-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .result-image {
+            padding: 2rem;
+            border-right: 1px solid #eee;
+        }
+
+        .result-image img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .result-image p {
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            color: #999;
+            text-align: center;
+        }
+
+        .result-info {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-prediction {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--green);
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            animation: popIn 0.6s ease;
+        }
+
+        .confidence-section { margin-bottom: 2rem; }
+        .confidence-label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        .confidence-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--light-green));
+            border-radius: 4px;
+            animation: fillBar 1s ease forwards;
+            width: 0;
+        }
+
+        .confidence-value {
+            margin-top: 0.4rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--green);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-primary { background: var(--green); color: white; border: none; }
+        .btn-primary:hover { background: var(--light-green); transform: translateY(-2px); }
+        .btn-secondary { background: transparent; color: var(--dark); border: 1px solid #ccc; }
+        .btn-secondary:hover { border-color: var(--green); color: var(--green); }
+
+        .rice-info {
+            background: white;
+            margin-top: 2rem;
+            padding: 2rem;
+        }
+
+        .rice-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--green);
+        }
+
+        .rice-info p { color: #555; line-height: 1.7; font-size: 0.95rem; }
+
+        footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.85rem;
+            margin-top: 4rem;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fillBar {
+            to { width: var(--target-width); }
+        }
+
+        @media (max-width: 600px) {
+            .result-body { grid-template-columns: 1fr; }
+            .result-image { border-right: none; border-bottom: 1px solid #eee; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/" class="nav-logo">Rice Type Detection</a>
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#testimonials">Testimonials</a></li>
+        <li><a href="/#contact">Contact</a></li>
+        <li><a href="/details">Predict</a></li>
+    </ul>
+</nav>
+
+<div class="breadcrumb">
+    <a href="/">Home</a> / <a href="/details">Details</a> / Results
+</div>
+
+<div class="result-container">
+    <div class="result-card">
+        <div class="result-header">
+            <h2>Prediction Result</h2>
+            <p>Your rice grain has been classified</p>
+        </div>
+        <div class="result-body">
+            <div class="result-image">
+                <img src="/{{ image_path }}" alt="Uploaded Rice Image">
+                <p>Uploaded Image</p>
+            </div>
+            <div class="result-info">
+                <p class="result-label">Detected Rice Type</p>
+                <p class="result-prediction">{{ prediction }}</p>
+
+                <div class="confidence-section">
+                    <p class="confidence-label">Confidence Score</p>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="--target-width: {{ confidence }}%"></div>
+                    </div>
+                    <p class="confidence-value">{{ confidence }}%</p>
+                </div>
+
+                <div class="btn-group">
+                    <a href="/details" class="btn btn-primary">Try Another</a>
+                    <a href="/" class="btn btn-secondary">Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="rice-info">
+        <h3>About {{ prediction }} Rice</h3>
+        {% if prediction == 'Arborio' %}
+      <p>Arborio is an Italian short-grain rice named after the town of Arborio in the Po Valley. It is known for its high starch content which gives risotto its creamy texture.</p>
+        {% elif prediction == 'Basmati' %}
+        <p>Basmati is a variety of long, slender-grained aromatic rice traditionally grown in the Himalayas. It is known for its fragrant aroma and fluffy texture when cooked.</p>
+        {% elif prediction == 'Ipsala' %}
+        <p>Ipsala rice is a Turkish variety grown in the Ipsala district. It is a medium-grain rice known for its soft texture and is widely used in Turkish cuisine.</p>
+        {% elif prediction == 'Jasmine' %}
+        <p>Jasmine rice is a long-grain variety of fragrant rice. Its fragrance is similar to pandan and popcorn. It is grown mainly in Thailand, Cambodia, Laos, and southern Vietnam.</p>
+        {% elif prediction == 'Karacadag' %}
+        <p>Karacadag is a traditional Turkish rice variety with geographical indication, grown in the Diyarbakir region. It is a short-grain rice with a unique flavor profile.</p>
+        {% endif %}
+    </div>
+</div>
+
+<footer>
+    Rice Type Detection &copy; 2026
+</footer>
+
+<script>
+    // Animate confidence bar on load
+    window.addEventListener('load', () => {
+        const fill = document.querySelector('.confidence-fill');
+        if (fill) {
+            const target = fill.style.getPropertyValue('--target-width');
+            fill.style.width = target;
+        }
+    });
+</script>
+
+</body>
+</html>
