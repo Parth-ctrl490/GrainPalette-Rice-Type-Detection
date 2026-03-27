@@ -65,17 +65,25 @@ Home growers can explore the diversity of rice types and understand their unique
 ## 🗂️ Project Structure
 ```
 GrainPalette-Rice-Type-Detection/
+├── Data/
+│ └── README.md
+│
+├── Training/
+│ ├── rice-classification-1.ipynb
+│ └── README.md
+│
 ├── static/
-│   ├── uploads/
-│   └── style.css
+│ ├── uploads/
+│ └── style.css
+│
 ├── templates/
-│   ├── index.html
-│   ├── details.html
-│   └── results.html
+│ ├── index.html
+│ ├── details.html
+│ └── results.html
+│
 ├── app.py
 ├── rice.h5
-├── rice-classification-1.ipynb
-└── GrainPalette_Report.docx
+├── GrainPalette_Report.docx
 ```
 
 ---
