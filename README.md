@@ -92,7 +92,7 @@ GrainPalette-Rice-Type-Detection/
 
 1. Install dependencies:
 ```
-pip install flask tensorflow opencv-python numpy scikit-learn
+pip install -r requirements.txt
 ```
 
 2. Run the app:
